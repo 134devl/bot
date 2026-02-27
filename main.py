@@ -164,7 +164,8 @@ async def process_bulk_del(message: Message, state: FSMContext):
     if not ids: return await message.answer("ID не найдены.")
     
     async with db_pool.acquire() as conn:
-        await conn.execute('UPDATE users SET role = "none" WHERE user_id = ANY($1)', ids)
+        await conn.execute("UPDATE users SET role = 'none' WHERE user_id = ANY($1)", ids)
+
         
     await message.answer(f"🗑 Тихо удалено {len(ids)} тестеров.", reply_markup=admin_kb)
     await state.clear()
@@ -415,3 +416,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
